@@ -4,10 +4,16 @@ A simple two-player Tic Tac Toe game for the terminal, built in Python. Includes
 
 ---
 
+## ⚙️ Requirements
+
+- Python 3.10+
+- [`termcolor`](https://pypi.org/project/termcolor/)
+- [`uv`](https://github.com/astral-sh/uv)
+
 ## Setup
 
 Install and activate the virtual environment:
 
-```bash
+```bashS
 uv venv
 source .venv/bin/activate

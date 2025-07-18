@@ -50,3 +50,25 @@ def is_full(board):
     if ' ' in row:
       return False
   return True
+
+# Get user input and validate it's a position between 0 and 2
+def get_position(prompt):
+  while True:
+    try:
+      position = int(input(prompt))
+      if position < 0 or position > 2:
+        raise ValueError
+      return position
+    except ValueError:
+      print('Invalid input!')   # Handles both out-of-range and non-integer input
+
+# Prompt player for a move and write it to the board
+def get_move(current_player):
+  print(f"Player {current_player}'s turn")
+  while True:
+    row = get_position('Enter row (0-2): ')
+    column = get_position('Enter column (0-2): ')
+    if board[row][column] == ' ':       # If the selected cell is empty, update it with the player's symbol
+      board[row][column] = current_player
+      break
+    print('This spot is already taken')   # Prevent overwriting moves
