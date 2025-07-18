@@ -19,10 +19,10 @@ A simple two-player Tic Tac Toe game for the terminal, built in Python. Includes
 
 Install and activate the virtual environment:
 
-```bashS
+```bash
 uv venv
 source .venv/bin/activate
-
+```
 ## ▶️ How to Run
 
 ```bash

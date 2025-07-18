@@ -4,6 +4,9 @@ from termcolor import colored   # For coloring player symbols (X/O) in terminal 
 X = 'X'
 O = 'O'
 
+# Initialize scores
+scores = {X: 0, O: 0}
+
 # Initialize 3x3 board with empty spaces
 board = [
   [' ', ' ', ' '],
@@ -31,17 +34,14 @@ def check_winner(board):
   for row in board:
     if row[0] == row[1] == row[2] != ' ':
       return True
-
   # Column check: iterate 0–2 and check top-to-bottom values
   for column in range(3):
     if board[0][column] == board[1][column] == board[2][column] != ' ':
       return True
-
   # Diagonal checks (both directions)
   if board[0][0] == board[1][1] == board[2][2] != ' ' or \
-     board[0][2] == board[1][1] == board[2][0] != ' ':
-     return True
-
+    board[0][2] == board[1][1] == board[2][0] != ' ':
+    return True
   return False    # No win condition met
 
 # Utility to check if the board is full (used to detect a draw)
@@ -85,6 +85,8 @@ def main():
 
     if check_winner(board):   # End game on win
       print(f'Player {current_player} wins!')
+      scores[current_player] += 1   # Increment score
+      print(f"Scores: X - {scores[X]}, O - {scores[O]}")  # Show scores
       break
 
     if is_full(board):    # End game on draw
