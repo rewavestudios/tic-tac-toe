@@ -7,12 +7,9 @@ O = 'O'
 # Initialize scores
 scores = {X: 0, O: 0}
 
-# Initialize 3x3 board with empty spaces
-board = [
-  [' ', ' ', ' '],
-  [' ', ' ', ' '],
-  [' ', ' ', ' ']
-]
+# Returns a fresh 3x3 board for a new game round
+def reset_board():
+  return [[' ', ' ', ' '] for _ in range(3)]
 
 # Color the cell mark based on player
 def cell(mark):
@@ -40,7 +37,7 @@ def check_winner(board):
       return True
   # Diagonal checks (both directions)
   if board[0][0] == board[1][1] == board[2][2] != ' ' or \
-    board[0][2] == board[1][1] == board[2][0] != ' ':
+     board[0][2] == board[1][1] == board[2][0] != ' ':
     return True
   return False    # No win condition met
 
@@ -63,7 +60,7 @@ def get_position(prompt):
       print('Invalid input!')   # Handles both out-of-range and non-integer input
 
 # Prompt player for a move and write it to the board
-def get_move(current_player):
+def get_move(board, current_player):
   print(f"Player {current_player}'s turn")
   while True:
     row = get_position('Enter row (0-2): ')
@@ -73,16 +70,16 @@ def get_move(current_player):
       break
     print('This spot is already taken')   # Prevent overwriting moves
 
-# Entry point for the game
-def main():
+def play_game():
+  board = reset_board() # Fresh board for each round
   print_board(board)    # Initial empty board
   current_player = X    # X always starts
 
   # Game loop runs until win or draw
   while True:
-    get_move(current_player)    # Player makes a move
+    get_move(board, current_player)    # Player makes a move
     print_board(board)          # Reflect move on board
-
+    
     if check_winner(board):   # End game on win
       print(f'Player {current_player} wins!')
       scores[current_player] += 1   # Increment score
@@ -90,11 +87,21 @@ def main():
       break
 
     if is_full(board):    # End game on draw
-      print(f'Board is full')
+      print('Board is full — draw!')
+      print(f"Scores: X - {scores[X]}, O - {scores[O]}")  # Show scores even on draw
       break
 
     # Alternate between X and O
     current_player = O if current_player == X else X
+
+# Entry point for the game
+def main():
+  while True:     # outer loop to repeat games
+    play_game()   # one round per call
+    again = input("Play again? (y/n): ").lower()
+    if again != 'y':
+      print("Thanks for playing!")
+      break
 
 # Run game only if executed directly
 if __name__ == '__main__':
