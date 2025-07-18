@@ -72,3 +72,28 @@ def get_move(current_player):
       board[row][column] = current_player
       break
     print('This spot is already taken')   # Prevent overwriting moves
+
+# Entry point for the game
+def main():
+  print_board(board)    # Initial empty board
+  current_player = X    # X always starts
+
+  # Game loop runs until win or draw
+  while True:
+    get_move(current_player)    # Player makes a move
+    print_board(board)          # Reflect move on board
+
+    if check_winner(board):   # End game on win
+      print(f'Player {current_player} wins!')
+      break
+
+    if is_full(board):    # End game on draw
+      print(f'Board is full')
+      break
+
+    # Alternate between X and O
+    current_player = O if current_player == X else X
+
+# Run game only if executed directly
+if __name__ == '__main__':
+  main()
